@@ -1,0 +1,34 @@
+baseURL = "https://dbmaintain.github.io/"
+languageCode = "en-us"
+title = "DbMaintain"
+theme = "hugo-theme-techdoc"
+
+hasCJKLanguage = true
+pygmentsUseClasses = true
+pygmentsCodefences = true
+
+[Params]
+    # Souce Code repository section
+    description = "automatic database updates made easy"
+    github_repository = "https://github.com/thingsym/hugo-theme-techdoc"
+    version = "2.7.3"
+
+    # Documentation repository section
+    # documentation repository (set edit link to documentation repository)
+    github_doc_repository = "https://github.com/thingsym/hugo-theme-techdoc"
+
+# Global menu section
+[[menu.main]]
+    name = "Home"
+    url = "/"
+    weight = 1
+
+[[menu.main]]
+    name = "Documentation"
+    url = "/docs/"
+    weight = 2
+
+[[menu.main]]
+    name = "Downloads"
+    url = "https://github.com/DbMaintain/dbmaintain/releases"
+    weight = 3
