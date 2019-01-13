@@ -30,5 +30,5 @@ pygmentsCodefences = true
 
 [[menu.main]]
     name = "Downloads"
-    url = "https://github.com/DbMaintain/dbmaintain/releases"
+    url = "/downloads/"
     weight = 3
