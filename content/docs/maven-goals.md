@@ -20,7 +20,7 @@ This page gives an overview of the different maven goals and their configuration
 createScriptArchive
 ===================
 
-Task that enables creating a jar file that packages all database update scripts. This jar can then be used as input for the updateDatabase task to apply changes on a target database. This way, database updates can be distributed as a deliverable, just like a war or ear file.
+Creates a jar file that packages all database update scripts. This jar can then be used as input for the updateDatabase task to apply changes on a target database. This way, database updates can be distributed as a deliverable, just like a war or ear file.
 
 The created jar file will contain all configuration concerning the scripts in the META-INF folder.
 
@@ -90,7 +90,7 @@ to the build.
 updateDatabase
 ==============
 
-Task that updates the database to the latest version.
+Updates the database to the latest version.
 
 One or more [databases](#database-configuration-element) must be specified as child elements.
 
@@ -272,7 +272,7 @@ One or more [databases](#database-configuration-element) must be specified as ch
 markDatabaseAsUpToDate
 ======================
 
-This operation updates the state of the database to indicate that all scripts have been executed, without actually
+Updates the state of the database to indicate that all scripts have been executed, without actually
 executing them. This can be useful when you want to start using DbMaintain on an existing database, or after having
 fixed a problem directly on the database.
 
@@ -424,7 +424,7 @@ One or more [databases](#database-configuration-element) must be specified as ch
 clearDatabase
 =============
 
-Task that removes all database items like tables, views etc from the database and empties the DBMAINTAIN_SCRIPTS table.
+Removes all database items like tables, views etc from the database and empties the DBMAINTAIN_SCRIPTS table.
 
 One or more [databases](#database-configuration-element) must be specified as child elements.
 
@@ -476,7 +476,7 @@ One or more [databases](#database-configuration-element) must be specified as ch
 cleanDatabase
 =============
 
-Task that removes the data of all database tables, except for the `DBMAINTAIN_SCRIPTS` table.
+Removes the data of all database tables, except for the `DBMAINTAIN_SCRIPTS` table.
 
 One or more [databases](#database-configuration-element) must be specified as child elements.
 
@@ -527,7 +527,7 @@ One or more [databases](#database-configuration-element) must be specified as ch
 disableConstraints
 ==================
 
-Task that disables or drops all foreign key and not null constraints.
+Disables or drops all foreign key and not null constraints.
 
 One or more [databases](#database-configuration-element) must be specified as child elements.
 
@@ -578,7 +578,7 @@ One or more [databases](#database-configuration-element) must be specified as ch
 updateSequences
 ===============
 
-Task that updates all sequences and identity columns to a minimum value.
+Updates all sequences and identity columns to a minimum value.
 
 One or more [databases](#database-configuration-element) must be specified as child elements.
 
@@ -630,8 +630,7 @@ One or more [databases](#database-configuration-element) must be specified as ch
 ```
 
 
-
-Database configuration element
+Database Configuration Element
 ==============================
 
 | Parameter | Description |

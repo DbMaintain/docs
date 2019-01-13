@@ -7,8 +7,7 @@ draft: false
 Overview
 ===============
 
-DbMaintain enables automatic roll-out of updates to a relational database. It brings database scripts into version control just like regular source code
-to transparently deploy databases from development to production.
+DbMaintain enables automatic roll-out of updates to a relational database. It brings database scripts into version control just like regular source code to transparently deploy databases from development to production.
 	
 DbMaintain keeps track of which database updates have been deployed on which database.
 

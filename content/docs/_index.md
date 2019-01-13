@@ -3,8 +3,6 @@ title: "Documentation"
 date: 2019-01-11T17:47:21+01:00
 draft: false
 ---
-
-This page describes all features of DbMaintain:
 	
 * [Script organization](#script-organization)
     * [Incremental and repeatable scripts](#incremental-and-repeatable-scripts)
@@ -37,7 +35,7 @@ This page describes all features of DbMaintain:
 * [PL/SQL support](#plsql-support)
 * [Native runner support](#native-runner-support)
 	
-Script organization
+Script Organization
 ---------------------
 
 Database scripts have to be organized in a folder structure, like demonstrated in following example:
@@ -51,7 +49,7 @@ Folder and script names must start with an index number followed by an underscor
 
 Suppose you add a new script called `03_add_productid_sequence.sql`. The next time you call the `updateDatabase` operation, the database is updated incrementally by executing this new script. Unless you use the `fromScratch` option, updating an already executed incremental script is not allowed: the updateDatabase action will fail if you try to do so. If the `fromScratch` option is used and an existing incremental script is changed, the database is cleared (i.e. all database objects are dropped) and all scripts are executed again.
 	
-### Incremental and repeatable scripts
+### Incremental and repeatable Scripts
 
 The database scripts from the example above are incremental: each script contains a `delta`, and should be executed only once in the proper sequence. But DbMaintain also supports repeatable scripts: A repeatable script must be written in such a way that it can be executed multiple times. For example, function or stored procedure defitions and views can be organized as repeatable scripts. The advantage of a repeatable script is that it can be modified: When changed, the script is simply executed again. 
 	
@@ -67,7 +65,7 @@ Repeatable scripts are always executed after all incremental (indexed) scripts. 
                     proc_refresh_materialized_views.sql
 
 	
-### Postprocessing scripts
+### Postprocessing Scripts
 Some projects have scripts that need to be executed each time a script was executed, such as for example a script that compiles all stored procedures. Post processing scripts can be defined for this purpose. Post processing scripts have to be located in the directory called `postprocessing`, located directly in the root of the configured scripts folder. They can be indexed, but they don't have to be: Indexes can be used to indicate the execution sequence of the post-processing scripts. An indexed post-processing script can be modified without causing an error or triggering a from-scratch update. If a post-processing script is modified, all of them are executed again. For example:
 	
     scripts/incremental/01_v1.0/01_products_and_orders.sql
@@ -79,7 +77,7 @@ Some projects have scripts that need to be executed each time a script was execu
             postprocessing/01_compile_all.sql
                         02_grant_select_to_read_user.sql
 
-### Scripts archives
+### Scripts Archives
 In the above examples we showed that DbMaintain can execute scripts from folders. It is also possible to package these scripts in a jar and then execute the scripts from this jar. This way you can treat scripts as a real artifact in the same way as you would for example deliver an application in an EAR.
 
 A typical setup would be to let your build system (eg Hudson) create a scripts archive during the build along with all the other artifacts. The same scripts archive can then be rolled out on your development, system test, acceptance and production environments. Just use the updateDatabase task and DbMaintain will examine the current state of the target database and executed the appropriate scripts on them.
@@ -88,7 +86,7 @@ Use the createScriptArchive task to create a scripts jar. You can then specify t
 See the {{{ant-tasks.html} ant tasks}} and {{{maven-goals.html} maven goals}} for examples and more info on the available parameters.
 
 
-### Multi-database / user support
+### Multi-Database / User Support
 On some projects, database scripts need to be executed using different database connections. For instance, if your database consists of multiple schemas and you need to log in with a different user to be able to perform modifications in another schema. 
 	
 You can configure multiple databases, each of them identified with a different logical name. This logical name can be used in the script name to indicate the target database of the script. If the script name doesn't indicate a target database, it will be executed on the default database.
@@ -134,7 +132,7 @@ DbMaintain offers an option called `allowOutOfSequenceExecutionOfPatches`. If se
 	
 The #patch token in the script file name is in fact a script qualifier, which can also be used for other purposes. The following section discusses the usage of qualifiers for inclusion and exclusion of scripts.
 	
-### Qualifier inclusion / exclusion
+### Qualifier Inclusion / Exclusion
 Scripts can be annotated with qualifiers by including # + the qualifier name in the filename. These qualifiers can be used to in- or exclude scripts from execution. This can serve a number of purposes: a typical use-case is to qualify scripts as containing test-data and exclude them from execution when updating a production database. Scripts can contain multiple qualifiers. The #patch indication as described in the previous section is also a qualifier - but with a special meaning.
 	
 Qualifiers can also be used when different DBMS-es are supported. For example:
@@ -157,21 +155,16 @@ Following example uses ant to execute scripts that are targeted for postgres or 
 When using a properties file to configure dbmaintain (e.g. for command-line use), the properties to use are dbMaintainer.qualifiers, dbmaintainer.includedQualifiers and dbmaintainer.excludedQualifiers.
 
 
-The DBMAINTAIN_SCRIPTS table
+The DBMAINTAIN_SCRIPTS Table
 ------------------------------
 The database keeps track of all executed scripts in the table DBMAINTAIN_SCRIPTS. The table definition looks like the following:
 	
-*---------+----------------------------------+
 |FILE_NAME|Relative path of the script file, starting from the root of the scripts directory or archive.|
-*---------+----------------------------------+
+|---------|----------------------------------|
 |FILE_LAST_MODIFIED_AT|Last modification timestamp of the script. If the property useScriptFileLastModificationDates is set to true, this timestamp is used to determine whether a script might have changed, in order to improve performence when there are many or large scripts. If the timestamp is unchanged, we assume that the script didn't change, and the script doesn't have to be read to calculate the checksum. If the timestamp changed, the checksum is verified to decide whether the script changed.|
-*---------+----------------------------------+
 |CHECKSUM|MD5 hash calculated on the contents of the script. This value is used to determine whether a script has changed since the last update.|
-*---------+----------------------------------+
 |EXECUTED_AT|Indicates when the script was executed on the database. This is info for the user, which is not used by the system.|
-*---------+----------------------------------+
 |SUCCEEDED|Indicates whether the script was executed successfully (1 if successful, 0 if there was an error)|
-*---------+----------------------------------+
 
 
 Error handling
@@ -321,7 +314,7 @@ or with multiple `database` subelements having a `name` attribute:
 In some cases, you want to configure a database with a certain name but exclude it from execution. The scripts that have an excluded database as target will simply be ignored. This can be useful if you only want to execute the scripts with a certain target database on an end-to-end test database but not on a local test datatabase. When using command line configuration, simply add a property database.`logicalname`.included=false. When using ant, create a `database` element with a `name` attribute and an `included` attribute set to `false`.
 
 
-DbMaintain operations
+DbMaintain Operations
 -----------------------
 Whether you launch DbMaintain from the command line, using ant or directly from Java code, the same set of operations is exposed. See the {{{ant-tasks.html} ant tasks}} and {{{maven-goals.html} maven goals}} for examples and more info on the available parameters.
 
@@ -331,7 +324,7 @@ Create a script archive
 The simplest way to use DbMaintain is to simply configure it with a scripts folder. However when building the project, it's a good idea to also package the scripts in the form of an archive file that you can publish as a build artifact.
 
 
-Update the database
+Update the Database
 ===================
 This operation can be used to bring the database to the latest version. First it checks which scripts were already applied to the database and executes the new scripts or the updated repeatable scripts. If an existing incremental script was changed, removed, or if a new incremental script has been added with a lower index than one that was already executed, an error is given; unless the `fromScratch` option is enabled: in that case all database objects are removed and the database is rebuilt from scratch. If there are post-processing scripts, these are always executed at the end.
 
@@ -351,32 +344,32 @@ Mark the database as up-to-date
 This operation updates the state of the database to indicate that all scripts have been executed, without actually executing them. This can be useful when you want to start using DbMaintain on an existing database, or after having fixed a problem directly on the database.
 
 
-Check script updates
+Check Script Updates
 =========================
 Performs a dry-run of the `updateDatabase` operation and prints all detected script updates, without executing anything. This operation fails whenever the `updateDatabase` operation would fail, i.e. if there are any irregular script updates and `fromScratchEnabled` is `false` or if a patch script was added out-of-sequence and `allowOutOfSequenceExecutionOfPatches` is `false`. An automatic test could be created that executes this operation against a test database that cannot be updated from scratch, to enforce at all times that no irregular script updates are introduced.
 
 
-Clear the database
+Clear the Database
 =========================
 This operation removes all database objects from the database, such as tables, views, sequences, synonyms and triggers. The database schemas will be left untouched: this way, you can immediately start an update afterwards. This operation is also called when a from-scratch update is performed. The table dbmaintain_scripts is not dropped but all data in it is removed. It's possible to exclude certain database objects to make sure they are not dropped, like described in [Preserve database objects](#Preserve_database_objects).
 
 
-Clean the database
+Clean the Database
 =========================
 If you want to remove all existing data from the tables in your database, you can call the cleanDatabase operation. The data from the table dbmaintain_script is not deleted. It's possible to preserve data from certain tables, like described in [Preserve database objects](#Preserve_database_objects). The updateDatabase operation offers an option to automatically clean the database before doing an update.
 
 
-Disable constraints
+Disable Constraints
 =========================
 This operation disables all foreign key, not null and unique constraints. The updateDatabase operation offers an option to automatically disable the constraints after the scripts were executed: This can be useful for a database used to write persistence layer unit tests, to simplify the definition and limit the necessary amount of test data. When using the automatic database update option of [unitils](http://www.unitils.org), which uses DbMaintain, the disable constraints option is enabled by default.
 
 
-Update sequences
+Update Sequences
 =========================
 This operation is also mainly useful for automated testing purposes. This operation sets all sequences and identity columns to a minimum value. By default this value is 1000, but is can be configured with the `lowestAcceptableSequenceValue` option. The updateDatabase operation offers an option to automatically update the sequences after the scripts were executed.
 
 
-Preserve database objects
+Preserve Database Objects
 =========================
 It's possible to exclude certain database objects from being dropped when a fromScratch update occurs, or when the clearDatabase operation is invoked: the data in these tables is also not removed when performing an update using the cleanDatabase option. If you want a table to be dropped in case of a fromScratch update, but you want it's data to preserved when performing the cleanDatabase operation, you can use one of the preserveDataOnly properties.
 	
@@ -430,7 +423,7 @@ END;
 Tip: It's a good idea to use repeatable scripts for your stored procedure definitions: this way, you can simply make changes to these definitions when necessary (use the CREATE OR REPLACE syntax to make sure these scripts are repeatable). Create postprocessing script that performs a compile of all stored procedures after each database update.
 
 
-Native runner support
+Native Runner Support
 =========================
 By default DbMainain uses JDBC to execute the scripts. For Oracle and Db2 it is also possible to use the native script runners instead of JDBC. For Oracle you can use `Sql*Plus` and for Db2 you can use the `db2 CLP` runner.
 The advantage is that you can use all the commands that these programs support. The disadvantage is that you lose platform independence: these programs need to be installed on the system.
