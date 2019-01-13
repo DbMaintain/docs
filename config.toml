@@ -10,12 +10,12 @@ pygmentsCodefences = true
 [Params]
     # Souce Code repository section
     description = "automatic database updates made easy"
-    github_repository = "https://github.com/thingsym/hugo-theme-techdoc"
+    github_repository = "https://github.com/DbMaintain/dbmaintain"
     version = "2.7.3"
 
     # Documentation repository section
     # documentation repository (set edit link to documentation repository)
-    github_doc_repository = "https://github.com/thingsym/hugo-theme-techdoc"
+    github_doc_repository = "https://github.com/DbMaintain/docs"
 
 # Global menu section
 [[menu.main]]
