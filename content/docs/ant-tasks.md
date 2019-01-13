@@ -49,7 +49,7 @@ updateDatabase
 
 Task that updates the database to the latest version.
 
-One or more [databases](#Database_child_element) must be specified as child elements.
+One or more [databases](#database-child-element) must be specified as child elements.
 
 |Attribute | Description|
 |--------------|----------------|
@@ -87,7 +87,7 @@ markErrorScriptPerformed
 
 Task that indicates that the failed script was manually performed. The script will NOT be run again in the next update. No scripts will be executed by this task.
 
-One or more [databases](#Database_child_element) must be specified as child elements.
+One or more [databases](#database-child-element) must be specified as child elements.
 
 |Attribute | Description|
 |--------------|----------------|
@@ -110,7 +110,7 @@ markErrorScriptReverted
 
 Task that indicates that the failed script was manually reverted. The script will be run again in the next update. No scripts will be executed by this task.
 
-One or more [databases](#Database_child_element) must be specified as child elements.
+One or more [databases](#database-child-element) must be specified as child elements.
 
 |Attribute | Description|
 |--------------|----------------|
@@ -133,7 +133,7 @@ markDatabaseAsUpToDate
 
 This operation updates the state of the database to indicate that all scripts have been executed, without actually executing them. This can be useful when you want to start using DbMaintain on an existing database, or after having fixed a problem directly on the database.
 
-One or more [databases](#Database_child_element) must be specified as child elements.
+One or more [databases](#database-child-element) must be specified as child elements.
 
 |Attribute | Description|
 |--------------|----------------|
@@ -161,7 +161,7 @@ checkScriptUpdates
 
 Performs a dry run of the database update. May be used to verify if there are any updates or in a test that fails if it appears that an irregular script update was performed.
 
-One or more [databases](#Database_child_element) must be specified as child elements.
+One or more [databases](#database-child-element) must be specified as child elements.
 
 |Attribute | Description|
 |--------------|----------------|
@@ -200,7 +200,7 @@ clearDatabase
 
 Task that removes all database items like tables, views etc from the database and empties the DBMAINTAIN_SCRIPTS table.
 
-One or more [databases](#Database_child_element) must be specified as child elements.
+One or more [databases](#database-child-element) must be specified as child elements.
 
 |Attribute | Description|
 |--------------|----------------|
@@ -223,7 +223,7 @@ cleanDatabase
 
 Task that removes the data of all database tables, except for the DBMAINTAIN_SCRIPTS table.
 
-One or more [databases](#Database_child_element) must be specified as child elements.
+One or more [databases](#database-child-element) must be specified as child elements.
 
 |Attribute | Description|
 |--------------|----------------|
@@ -247,7 +247,7 @@ disableConstraints
 
 Task that disables or drops all foreign key and not null constraints.
 
-One or more [databases](#Database_child_element) must be specified as child elements.
+One or more [databases](#database-child-element) must be specified as child elements.
 
 |Attribute | Description|
 |--------------|----------------|
@@ -270,7 +270,7 @@ updateSequences
 
 Task that updates all sequences and identity columns to a minimum value.
 
-One or more [databases](#Database_child_element) must be specified as child elements.
+One or more [databases](#database-child-element) must be specified as child elements.
 
 |Attribute | Description|
 |--------------|----------------|
@@ -297,7 +297,7 @@ Database child element
 |--------------|----------------|
 | name | An optional name. There can only be 1 database without a name. Can be used in the script name as target database. E.g. 01_@mydb_script.sql |
 | included | Set to false if script for this database should be skipped. Defaults to true. |
-| dialect | This property specifies the underlying DBMS implementation. Supported values are 'oracle', 'db2', 'mysql', 'hsqldb', 'postgresql', 'derby' and 'mssql'. DbMaintain will try to detect the dialect from the JDBC url. You can set this property when DbMainain fails to auto-detect the dialect. |
+| dialect | This property specifies the underlying DBMS implementation. Supported values are 'oracle', 'db2', 'mysql', 'hsqldb', 'postgresql', 'derby' and 'mssql'. DbMaintain will try to detect the dialect from the JDBC url. You can set this property when DbMaintain fails to auto-detect the dialect. |
 | driverClassName | The class name of the database driver. Required |
 | url | The url to the database. Required |
 | userName | The user name for the database. Required |

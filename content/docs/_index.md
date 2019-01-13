@@ -19,7 +19,7 @@ draft: false
         * [Using ant](#using-ant)
         * [From Java code](#from-java-code)
 	  
-* [DbMaintain operations](#dbmaintain-operations)
+* [DbMaintain Operations](#dbmaintain-operations)
     * [Create a script archive](#create-a-script-archive)
     * [Update the database](#update-the-database)
     * [Mark error script performed](#mark-error-script-performed)
@@ -83,7 +83,7 @@ In the above examples we showed that DbMaintain can execute scripts from folders
 A typical setup would be to let your build system (eg Hudson) create a scripts archive during the build along with all the other artifacts. The same scripts archive can then be rolled out on your development, system test, acceptance and production environments. Just use the updateDatabase task and DbMaintain will examine the current state of the target database and executed the appropriate scripts on them.
 
 Use the createScriptArchive task to create a scripts jar. You can then specify the jar as script location for the other tasks.
-See the {{{ant-tasks.html} ant tasks}} and {{{maven-goals.html} maven goals}} for examples and more info on the available parameters.
+See the [ant-tasks](./ant-tasks) and [maven-goals](./maven-goals) for examples and more info on the available parameters.
 
 
 ### Multi-Database / User Support
@@ -223,7 +223,7 @@ To bring a database up-to-date, execute following command:
 
 If a file named dbmaintain.properties is available in the execution directory, this file is automatically loaded. To load another file, add -config path/to/configFile to the command.
 	
-You can get an overview of all available command line operations and their usage by simply executing dbmaintain.sh/bat with no arguments.
+You can get an overview of all available command line operations and their usage by simply executing `dbmaintain.sh/bat`^ with no arguments.
 	 
 ### Using ant
 Ant tasks are provided for all DbMaintain operations. To be able to use these tasks, you have to declare them in your build file, e.g. as follows:
@@ -244,7 +244,7 @@ You can perform a database update with the following task.
 </updateDatabase>
 ```
 
-For an overview of all ant tasks with all their attributes, refer to the {{{ant-tasks.html}ant tasks}} page.
+For an overview of all ant tasks with all their attributes, refer to the [ant-tasks](./ant-tasks) page.
 
 ### From Java code}
 To launch DbMaintain operations from Java code, first create an instance of `org.dbmaintain.MainFactory> and then use that factory to create the DbMaintain, ConstraintsDisabler, etc instances.
@@ -263,7 +263,7 @@ dbMaintainer.updateDatabase(false);
 
 ### Configure the database(s)
 
-DbMaintain can be configured with one or more databases. If you use more than one database, the target database has to be specified in the script (see [Multi-database / user support](#Multi-database__user_support)). To configure a single database in a properties file, add following properties:
+DbMaintain can be configured with one or more databases. If you use more than one database, the target database has to be specified in the script (see [Multi-database / user support](#multi-database-user-support)). To configure a single database in a properties file, add following properties:
 
 ```properties
 database.driverClassName=<fully qualified JDBC driver class name>
@@ -316,7 +316,7 @@ In some cases, you want to configure a database with a certain name but exclude 
 
 DbMaintain Operations
 -----------------------
-Whether you launch DbMaintain from the command line, using ant or directly from Java code, the same set of operations is exposed. See the {{{ant-tasks.html} ant tasks}} and {{{maven-goals.html} maven goals}} for examples and more info on the available parameters.
+Whether you launch DbMaintain from the command line, using ant or directly from Java code, the same set of operations is exposed. See the [ant-tasks](./ant-tasks) and [maven-goals](./maven.goals) for examples and more info on the available parameters.
 
 
 Create a script archive
@@ -326,7 +326,7 @@ The simplest way to use DbMaintain is to simply configure it with a scripts fold
 
 Update the Database
 ===================
-This operation can be used to bring the database to the latest version. First it checks which scripts were already applied to the database and executes the new scripts or the updated repeatable scripts. If an existing incremental script was changed, removed, or if a new incremental script has been added with a lower index than one that was already executed, an error is given; unless the `fromScratch` option is enabled: in that case all database objects are removed and the database is rebuilt from scratch. If there are post-processing scripts, these are always executed at the end.
+Updates the database to the latest version. First it checks which scripts were already applied to the database and executes the new scripts or the updated repeatable scripts. If an existing incremental script was changed, removed, or if a new incremental script has been added with a lower index than one that was already executed, an error is given; unless the `fromScratch` option is enabled: in that case all database objects are removed and the database is rebuilt from scratch. If there are post-processing scripts, these are always executed at the end.
 
 
 Mark error script performed
@@ -341,7 +341,7 @@ Task that indicates that the failed script was manually reverted. The script wil
 
 Mark the database as up-to-date
 =========================
-This operation updates the state of the database to indicate that all scripts have been executed, without actually executing them. This can be useful when you want to start using DbMaintain on an existing database, or after having fixed a problem directly on the database.
+Updates the state of the database to indicate that all scripts have been executed, without actually executing them. This can be useful when you want to start using DbMaintain on an existing database, or after having fixed a problem directly on the database.
 
 
 Check Script Updates
@@ -361,7 +361,7 @@ If you want to remove all existing data from the tables in your database, you ca
 
 Disable Constraints
 =========================
-This operation disables all foreign key, not null and unique constraints. The updateDatabase operation offers an option to automatically disable the constraints after the scripts were executed: This can be useful for a database used to write persistence layer unit tests, to simplify the definition and limit the necessary amount of test data. When using the automatic database update option of [unitils](http://www.unitils.org), which uses DbMaintain, the disable constraints option is enabled by default.
+Disables all foreign key, not null and unique constraints. The updateDatabase operation offers an option to automatically disable the constraints after the scripts were executed: This can be useful for a database used to write persistence layer unit tests, to simplify the definition and limit the necessary amount of test data. When using the automatic database update option of [unitils](http://www.unitils.org), which uses DbMaintain, the disable constraints option is enabled by default.
 
 
 Update Sequences
