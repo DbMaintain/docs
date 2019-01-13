@@ -246,7 +246,7 @@ You can perform a database update with the following task.
 
 For an overview of all ant tasks with all their attributes, refer to the [ant-tasks](./ant-tasks) page.
 
-### From Java code}
+### From Java Code
 To launch DbMaintain operations from Java code, first create an instance of `org.dbmaintain.MainFactory> and then use that factory to create the DbMaintain, ConstraintsDisabler, etc instances.
 
 ```java
@@ -261,7 +261,7 @@ To perform a database update simply call:
 dbMaintainer.updateDatabase(false);
 ```
 
-### Configure the database(s)
+### Configure the Database(s)
 
 DbMaintain can be configured with one or more databases. If you use more than one database, the target database has to be specified in the script (see [Multi-database / user support](#multi-database-user-support)). To configure a single database in a properties file, add following properties:
 
@@ -351,12 +351,12 @@ Performs a dry-run of the `updateDatabase` operation and prints all detected scr
 
 Clear the Database
 =========================
-This operation removes all database objects from the database, such as tables, views, sequences, synonyms and triggers. The database schemas will be left untouched: this way, you can immediately start an update afterwards. This operation is also called when a from-scratch update is performed. The table dbmaintain_scripts is not dropped but all data in it is removed. It's possible to exclude certain database objects to make sure they are not dropped, like described in [Preserve database objects](#Preserve_database_objects).
+This operation removes all database objects from the database, such as tables, views, sequences, synonyms and triggers. The database schemas will be left untouched: this way, you can immediately start an update afterwards. This operation is also called when a from-scratch update is performed. The table dbmaintain_scripts is not dropped but all data in it is removed. It's possible to exclude certain database objects to make sure they are not dropped, like described in [Preserve database objects](#preserve-database-objects).
 
 
 Clean the Database
 =========================
-If you want to remove all existing data from the tables in your database, you can call the cleanDatabase operation. The data from the table dbmaintain_script is not deleted. It's possible to preserve data from certain tables, like described in [Preserve database objects](#Preserve_database_objects). The updateDatabase operation offers an option to automatically clean the database before doing an update.
+If you want to remove all existing data from the tables in your database, you can call the cleanDatabase operation. The data from the table dbmaintain_script is not deleted. It's possible to preserve data from certain tables, like described in [Preserve database objects](#preserve-database-objects). The updateDatabase operation offers an option to automatically clean the database before doing an update.
 
 
 Disable Constraints
