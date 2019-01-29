@@ -51,3 +51,4 @@ docker run --rm -e 'MAX_RETRY=10' -e 'SQL_GIT_URL=--branch 0.0.1 http://myuser:m
 do not exit but wait forever if successful
 ```
 docker run --rm -e 'SLEEP_SUCCESS=yes' -e 'MAX_RETRY=10' -e 'SQL_GIT_URL=--branch 0.0.1 http://myuser:mypassword@git.my-company.de/dbschema.git' -e 'PROPERTIES_GIT_URL=--branch 0.0.1 http://myuser:mypassword@git.my-company.de/dbmaintainproperties.git' -e 'DBMAINTAIN_PROPERTIES_PATH=my_relative_path_in_properties_scm_repo/testschema.properties' dbmaintain/dbmaintain updateDatabase
+```
