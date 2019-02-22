@@ -32,3 +32,8 @@ pygmentsCodefences = true
     name = "Downloads"
     url = "/downloads/"
     weight = 3
+
+[[menu.main]]
+    name = "Acknowledgements"
+    url = "/acknowledgements/"
+    weight = 4
