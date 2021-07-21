@@ -80,7 +80,7 @@ Some projects have scripts that need to be executed each time a script was execu
 ### Scripts Archives
 In the above examples we showed that DbMaintain can execute scripts from folders. It is also possible to package these scripts in a jar and then execute the scripts from this jar. This way you can treat scripts as a real artifact in the same way as you would for example deliver an application in an EAR.
 
-A typical setup would be to let your build system (eg Hudson) create a scripts archive during the build along with all the other artifacts. The same scripts archive can then be rolled out on your development, system test, acceptance and production environments. Just use the updateDatabase task and DbMaintain will examine the current state of the target database and executed the appropriate scripts on them.
+A typical setup would be to let your build system (e.g. Hudson) create a scripts archive during the build along with all the other artifacts. The same scripts archive can then be rolled out on your development, system test, acceptance and production environments. Just use the updateDatabase task and DbMaintain will examine the current state of the target database and execute the appropriate scripts on them.
 
 Use the createScriptArchive task to create a scripts jar. You can then specify the jar as script location for the other tasks.
 See the [ant-tasks](./ant-tasks) and [maven-goals](./maven-goals) for examples and more info on the available parameters.
@@ -93,7 +93,7 @@ You can configure multiple databases, each of them identified with a different l
 	
 The target database can be indicated in the script name using an @ sign. For incremental scripts the target database is separated from the index with an underscore; repeatable script names start with the target database indication.
 	
-For example, suppose we have a second schema called `USERS`, and we have to login with a different user to be to create or alter tables. We have configured a second database connection identified by the logical name `users`. The scripts 02_users.sql and proc_disactivate_inactive_users.sql have to be executed with this other user:
+For example, suppose we have a second schema called `USERS`, and we have to login with a different user to create or alter tables. We have configured a second database connection identified by the logical name `users`. The scripts 02_users.sql and proc_disactivate_inactive_users.sql have to be executed with this other user:
 	
     scripts/incremental/01_v1.0/01_products_and_orders.sql
                                 02_@users_users.sql
@@ -106,7 +106,7 @@ For example, suppose we have a second schema called `USERS`, and we have to logi
 
 
 ### Patches
-Because of the incremental nature of database updates, newly added scripts always have to come last: If a script is added with an lower index number than one that has already been executed, DbMaintain will give an error (or recreate the database from scratch, if this option is enabled). 
+Because of the incremental nature of database updates, newly added scripts always have to come last: If a script is added with a lower index number than one that has already been executed, DbMaintain will give an error (or recreate the database from scratch, if this option is enabled). 
 	
 However it sometimes occurs that, while a new version of an application is being developed, an existing release of the application has to be patched, and this patch involves an incremental database change. In this case, a new incremental script must be created that precedes the scripts from the current development version. 
 	
@@ -195,7 +195,7 @@ Modifying or removing them will no longer give an error. You could for example c
 If you create a scripts archive, it will only contain scripts starting from this revision. In other words, it will only contain the deltas with the image. This results in smaller jar files that only contain the actual changes for the next release.
 
 Note: when a scripts folder or a script does not have a version, the version is set to the value 'x'.
-For example, suppose you have following structure:
+For example, suppose you have the following structure:
 
     scripts/01_release_1/001_my_script.sql
 
@@ -223,7 +223,7 @@ To bring a database up-to-date, execute following command:
 
 If a file named dbmaintain.properties is available in the execution directory, this file is automatically loaded. To load another file, add -config path/to/configFile to the command.
 	
-You can get an overview of all available command line operations and their usage by simply executing `dbmaintain.sh/bat`^ with no arguments.
+You can get an overview of all available command line operations and their usage by simply executing `dbmaintain.sh/bat` with no arguments.
 	 
 ### Using ant
 Ant tasks are provided for all DbMaintain operations. To be able to use these tasks, you have to declare them in your build file, e.g. as follows:
@@ -247,7 +247,7 @@ You can perform a database update with the following task.
 For an overview of all ant tasks with all their attributes, refer to the [ant-tasks](./ant-tasks) page.
 
 ### From Java Code
-To launch DbMaintain operations from Java code, first create an instance of `org.dbmaintain.MainFactory> and then use that factory to create the DbMaintain, ConstraintsDisabler, etc instances.
+To launch DbMaintain operations from Java code, first create an instance of `org.dbmaintain.MainFactory` and then use that factory to create the DbMaintain, ConstraintsDisabler, etc instances.
 
 ```java
 URL configurationUrl = new File("dbmaintain.properties").toURI().toURL();
@@ -263,7 +263,7 @@ dbMaintainer.updateDatabase(false);
 
 ### Configure the Database(s)
 
-DbMaintain can be configured with one or more databases. If you use more than one database, the target database has to be specified in the script (see [Multi-database / user support](#multi-database-user-support)). To configure a single database in a properties file, add following properties:
+DbMaintain can be configured with one or more databases. If you use more than one database, the target database has to be specified in the script (see [Multi-database / user support](#multi-database-user-support)). To configure a single database in a properties file, add the following properties:
 
 ```properties
 database.driverClassName=<fully qualified JDBC driver class name>
@@ -273,7 +273,7 @@ database.password=<database password>
 database.schemaNames=<comma separated list of all database schemas used>
 ```
 
-If you configure multiple databases, you have to give a logical name to each of them, and list them in the property databases.names. The logical name has to be added to the property name to configure the driver, url, etc. The logical name can also be used in the script filenames to indicate the target database. The database that is listed first automatically becomes the default database, which is the target database for scripts that don't specify one. For example, if we want to configure a database called users and orders:
+If you configure multiple databases, you have to give a logical name to each of them, and list them in the property databases.names. The logical name has to be added to the property name to configure the driver, url, etc. The logical name can also be used in the script filenames to indicate the target database. The database that is listed first automatically becomes the default database, which is the target database for scripts that don't specify one. For example, if we want to configure databases called users and orders:
 	
 ```properties
 databases.names=users,orders
@@ -282,7 +282,7 @@ database.orders.driverClassName=<fully qualified JDBC driver class name>
 ...
 ```
 
-If, for a certain property, all databases share the same value, you can use the default property name to configure it, e.g. if all databases the hsqdb database driver. If you have one database but you need to connect using different database users to execute certain scripts, you can configure multiple databases that share all properties except their credentials. E.g.:
+If, for a certain property, all databases share the same value, you can use the default property name to configure it, e.g. if all databases use the hsqdb database driver. If you have one database but you need to connect using different database users to execute certain scripts, you can configure multiple databases that share all properties except their credentials. E.g.:
 	
 ```properties
 databases.names=admin,user,read
@@ -299,7 +299,7 @@ database.read.password=readpwd
 database.read.schemaNames=read
 ```
 
-If you use ant, you can configure the database(s) with a `database> subelement like follows:
+If you use ant, you can configure the database(s) with a `database` subelement like follows:
 	
 ```xml
     <database driverClassName="<fully qualified JDBC driver class name>" url="<database URL>" userName="admin" password="pwd" schemaNames="<comma separated list of all database schemas used>" />
@@ -371,7 +371,7 @@ This operation is also mainly useful for automated testing purposes. This operat
 
 Preserve Database Objects
 =========================
-It's possible to exclude certain database objects from being dropped when a fromScratch update occurs, or when the clearDatabase operation is invoked: the data in these tables is also not removed when performing an update using the cleanDatabase option. If you want a table to be dropped in case of a fromScratch update, but you want it's data to preserved when performing the cleanDatabase operation, you can use one of the preserveDataOnly properties.
+It's possible to exclude certain database objects from being dropped when a fromScratch update occurs, or when the clearDatabase operation is invoked: the data in these tables is also not removed when performing an update using the cleanDatabase option. If you want a table to be dropped in case of a fromScratch update, but you want it's data to be preserved when performing the cleanDatabase operation, you can use one of the preserveDataOnly properties.
 	
 ```properties
 # Comma separated list of database items that may not be dropped or cleared by DbMaintain when
@@ -420,7 +420,7 @@ END;
 /
 ```
 
-Tip: It's a good idea to use repeatable scripts for your stored procedure definitions: this way, you can simply make changes to these definitions when necessary (use the CREATE OR REPLACE syntax to make sure these scripts are repeatable). Create postprocessing script that performs a compile of all stored procedures after each database update.
+Tip: It's a good idea to use repeatable scripts for your stored procedure definitions: this way, you can simply make changes to these definitions when necessary (use the CREATE OR REPLACE syntax to make sure these scripts are repeatable). Create a postprocessing script that performs a compile of all stored procedures after each database update.
 
 
 Native Runner Support
